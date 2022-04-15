@@ -33,8 +33,8 @@ def oahu_beach(item, option2):
     if "package" not in item:
         print_pause("You feel nervous. You have never done such things.")
         while True:
-            choice = input("Would you like to (1) approach him or (2) "
-                           "run away?")
+            choice = valid_input("Would you like to (1) approach him or (2) "
+                                 "run away?", ['1', '2'])
             if choice == '1':
                 if "package" in item:
                     print_pause("You have already collected the package.")
