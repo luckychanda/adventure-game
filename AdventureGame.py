@@ -1,15 +1,17 @@
 import time
 import random
 
-def print_pause(message_to_print):
+
+def print_pause(message_to_print, delay=1):
     print(message_to_print)
-    time.sleep(1)
+    time.sleep(delay)
+
 
 def intro(item, option1, option2):
     print_pause("You and Mia went to Hawaii for your honeymoon. You "
                 "booked a luxury villa, with a beautiful view of the "
                 "beach.")
-    print_pause("You both decided to go " + option1 +" at night.")
+    print_pause("You both decided to go " + option1 + " at night.")
     print_pause("\n*Timeskip to 10:00pm*\n")
     print_pause("You awaken in your room with a heavy head.")
     print_pause("You looked around for Mia, but she wasn't there.")
@@ -19,11 +21,12 @@ def intro(item, option1, option2):
                 " Mia, but you need to do a job for them, to get Mia"
                 " back.")
     print_pause("The job is to collect a package from a person with "
-                " " + option2 +" at Oahu beach.")
+                " " + option2 + " at Oahu beach.")
     print_pause("Also, if you try to get police involved, they will "
                 "kill Mia.")
 
-def Oahu_Beach(item, option2):
+
+def oahu_beach(item, option2):
     print_pause("You rushed to the Oahu beach.")
     print_pause("You looked around for the person with " + option2 + ".")
     print_pause("You finally located him!")
@@ -31,16 +34,17 @@ def Oahu_Beach(item, option2):
         print_pause("You feel nervous. You have never done such things.")
         while True:
             choice = input("Would you like to (1) approach him or (2) "
-                            "run away?")
+                           "run away?")
             if choice == '1':
                 if "package" in item:
                     print_pause("You have already collected the package.")
                     print_pause("There is nothing more to do here.")
                     print_pause("You call the kidnapper and let them know "
-                    "that you have the package.")
+                                "that you have the package.")
                     break
                 else:
-                    print_pause("You approach the person with " + option2 +".")
+                    print_pause(
+                        "You approach the person with " + option2 + ".")
                     print_pause("\n*code* Do you also feel the MagicInAir! "
                                 "*code*\n")
                     print_pause("The person gives you the package and leaves.")
@@ -60,7 +64,7 @@ def Oahu_Beach(item, option2):
                 break
 
 
-def Call_Police(item, option2):
+def call_police(item, option2):
     print_pause("You're very scared. You don't know what to do.")
     print_pause("You finally decided to inform the police.")
     if "package" in item:
@@ -80,33 +84,49 @@ def Call_Police(item, option2):
     make_choice(item, option2)
     play_again()
 
+
 def make_choice(item, option2):
     print_pause("\nEnter 1 to Go to the beach.")
     print_pause("Enter 2 to Call police.\n")
     print_pause("What would you like to do?\n")
     while True:
-        choice1 = input("(Please enter 1 or 2.)\n")
+        choice1 = valid_input("(Please enter 1 or 2.)\n", ['1', '2'])
         if choice1 == "1":
-            Oahu_Beach(item, option2)
+            oahu_beach(item, option2)
             break
         elif choice1 == "2":
-            Call_Police(item, option2)
+            call_police(item, option2)
             break
 
+
 def play_again():
-    again = input("\nWould you like to play again? (y/n)\n").lower()
+    again = valid_input("\nWould you like to play again? (y/n)\n".lower(),
+                        ['y', 'n'])
     if again == "y":
         print_pause("\n\nExcellent! Restarting the game ...\n\n")
         play_game()
     elif again == "n":
         print_pause("\n\nThanks for playing! See you next time!\n\n")
+        exit(0)
+
+
+def valid_input(prompt, options):
+    while True:
+        option = input(prompt).lower()
+        if option in options:
+            return option
+        print_pause(f'Sorry, the option "{option}" is invalid. Try again!')
+        play_again()
+
 
 def play_game():
     item = []
     option1 = random.choice(["clubbing", "for a fancy dinner",
-                            "for a long walk on the beach"])
+                             "for a long walk on the beach"])
     option2 = random.choice(["red hat", "brown bag"])
     intro(item, option1, option2)
     make_choice(item, option2)
 
-play_game()
+
+if __name__ == '__main__':
+    play_game()
